@@ -5,13 +5,16 @@
  */
 package comp610.assignment1.hotplate;
 
+import java.awt.event.MouseMotionListener;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+
 /**
  *
  * @author ssr7324
  */
-public class HotPlateGUI {
-    Jslider temperatureJslider;
-    public static void main(String[] args) {
-        System.out.println("test");
-    }
+
+public class HotPlateGUI extends JPanel implements MouseListner,MouseMotionListener{
+    JSlider temperatureJSlider;
+
 }

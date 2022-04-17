@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class Element implements Runnable {
 
-    private List<Element> neighbours;
+    private final List<Element> neighbours;
     private double currentTemp;
-    private double heatConstant;
+    private final double heatConstant;
     private boolean stopRequested;
 
     public Element(double startTemp, double heatConstant) {
@@ -40,16 +40,16 @@ public class Element implements Runnable {
 
     @Override
     public void run() {
-        double avarageTemperature = 0;
+        double temperatureAvg = 0;
 
         while (!stopRequested) {
             synchronized (this) {
-                for (int i = 0; i < this.neighbours.size(); i++) {
-                    avarageTemperature += this.neighbours.get(i).getTemperature();
+                for (int i = 0; i < neighbours.size(); i++) {
+                    temperatureAvg += this.neighbours.get(i).getTemperature();
                 }
-                avarageTemperature /= this.neighbours.size() + 1;
+                temperatureAvg /= this.neighbours.size() + 1;
             }
-            this.currentTemp += (avarageTemperature - this.currentTemp) * this.heatConstant;
+            this.currentTemp += (temperatureAvg - this.currentTemp) * this.heatConstant;
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -59,6 +59,7 @@ public class Element implements Runnable {
     }
 
     public void addNeighbour(Element element) {
+        System.out.println("Checking the new element added");
         this.neighbours.add(element);
     }
 
@@ -67,13 +68,37 @@ public class Element implements Runnable {
     }
 
     public static void main(String[] args) {
-        Element element = new Element(100.0, 0.5);
-        Element anotherElement = new Element(0.0, 0.5);
+
+        Element element = new Element(500.0, 0.1);
+        Element anotherElement = new Element(0.0, 0.1);
 
         element.addNeighbour(anotherElement);
         anotherElement.addNeighbour(element);
 
         element.start();
         anotherElement.start();
+
+        double tempArray[] = new double[2];
+        tempArray[0] = element.getTemperature();
+        tempArray[1] = anotherElement.getTemperature();
+
+        while (!element.stopRequested) {
+
+            System.out.println("First Element Temperature: " + tempArray[0]);
+            System.out.println("Another Element Temperature: " + tempArray[1]);
+
+            try {
+                tempArray[0] = element.getTemperature();
+                tempArray[1] = anotherElement.getTemperature();
+                Thread.sleep(1000);
+                if (Math.abs(tempArray[0] - tempArray[1]) < 0.05) {
+                    element.requestStop();
+                    anotherElement.requestStop();
+                }
+            } catch (InterruptedException e) {
+                System.err.println(e);
+            }
+        }
+
     }
 }
