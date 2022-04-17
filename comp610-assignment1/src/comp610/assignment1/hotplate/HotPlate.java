@@ -10,5 +10,7 @@ package comp610.assignment1.hotplate;
  * @author ssr7324
  */
 public class HotPlate {
-    
+    public static void main(String[] args) {
+        System.out.println("test");
+    }
 }
