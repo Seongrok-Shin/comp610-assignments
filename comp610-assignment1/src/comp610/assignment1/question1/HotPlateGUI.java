@@ -52,11 +52,6 @@ public class HotPlateGUI extends JPanel implements ActionListener, ChangeListene
     public void mouseMoved(MouseEvent e) {
     }
 
-    public boolean isElementAtPosition(int getX, int getY, int setRow, int setCol) {
-        return getX >= setRow * 20 && getX <= (setRow * 20) + 20 && getY
-                >= setCol * 20 && getY <= (setCol * 20) + 20;
-    }
-
     @Override
     public void mouseClicked(MouseEvent e) {
     }
@@ -108,7 +103,7 @@ public class HotPlateGUI extends JPanel implements ActionListener, ChangeListene
     private class DrawPanel extends JPanel {
 
         public DrawPanel() {
-            super.setSize(new Dimension(500, 500));
+            super.setPreferredSize(new Dimension(500, 500));
             super.setBackground(Color.YELLOW);
         }
 
@@ -118,11 +113,10 @@ public class HotPlateGUI extends JPanel implements ActionListener, ChangeListene
             setX = (getWidth() / ROW);
             setY = (getHeight() / COL);
 
-            for (int row = 0; row < ROW; row++) {
-                for (int col = 0; col < COL; col++) {
-                    dimensionalElement[row][col].drawElement(g, row * setX,
-                            col * setY, setX - 1,
-                            setY - 1);
+            for (int row = 0; row < dimensionalElement.length; row++) {
+                for (int col = 0; col < dimensionalElement[row].length; col++) {
+                    dimensionalElement[row][col].setColor(g, row * setX,
+                            col * setY, setX - 1, setY - 1);
                 }
             }
         }
@@ -132,15 +126,15 @@ public class HotPlateGUI extends JPanel implements ActionListener, ChangeListene
         dimensionalElement = new Element[ROW][COL];
         for (Element[] dimensionalElement1 : dimensionalElement) {
             for (int col = 0; col < dimensionalElement.length; col++) {
-                dimensionalElement1[col] = new Element(0, 0.05);
+                dimensionalElement1[col] = new Element(0, 0.5);
             }
         }
     }
 
     private void addNeighbourToHotPlate() {
         for (int row = 0; row < dimensionalElement.length; row++) {
-            for (int col = 0; col < dimensionalElement.length; col++) {
-                Element element = new Element(0, 0.05);
+            for (int col = 0; col < dimensionalElement[row].length; col++) {
+                Element element = new Element(0, 0.5);
                 dimensionalElement[row][col] = element;
 
                 if (row - 1 >= 0 && col - 1 >= 0) {
@@ -166,30 +160,36 @@ public class HotPlateGUI extends JPanel implements ActionListener, ChangeListene
     }
 
     public HotPlateGUI() {
-        super();
-        super.setLayout(new BorderLayout());
+        super(new BorderLayout());
 
         this.setDimensionalElement();
         this.addNeighbourToHotPlate();
 
+        
         JLabel temperatureJLabel = new JLabel("Sets temperature 0 to 1000");
-        temperatureJLabel.setBorder(BorderFactory.createEmptyBorder());
-        temperatureJSlider = new JSlider(0, 1000);
+        temperatureJLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        temperatureJSlider = new JSlider();
+        temperatureJSlider.setMaximum(1000);
+        temperatureJSlider.setValue(500);
         temperatureJSlider.setMajorTickSpacing(100);
         temperatureJSlider.setMajorTickSpacing(10);
         temperatureJSlider.setPaintTicks(true);
         temperatureJSlider.addChangeListener(this);
 
         JLabel heatConstantJLabel = new JLabel("Sets heat constant 0.01 to 1");
-        heatConstantJLabel.setBorder(BorderFactory.createEmptyBorder());
-        heatConstantJSlider = new JSlider(1, 100);
+        heatConstantJLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        heatConstantJSlider = new JSlider();
+        heatConstantJSlider.setMaximum(100);
+        heatConstantJSlider.setMinimum(1);
         heatConstantJSlider.setMajorTickSpacing(10);
         heatConstantJSlider.setMajorTickSpacing(1);
         heatConstantJSlider.setPaintTicks(true);
         heatConstantJSlider.addChangeListener(this);
-
+        
+        
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
+        
         jPanel.add(temperatureJLabel);
         jPanel.add(temperatureJSlider);
         jPanel.add(heatConstantJLabel);

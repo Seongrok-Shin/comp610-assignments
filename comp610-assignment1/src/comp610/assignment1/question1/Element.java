@@ -64,7 +64,6 @@ public class Element implements Runnable {
     }
 
     public void addNeighbour(Element element) {
-        System.out.println("Checking the new element added");
         neighbours.add(element);
     }
 
@@ -72,9 +71,10 @@ public class Element implements Runnable {
         this.currentTemp += (appliedTemp - this.currentTemp) * this.heatConstant;
     }
 
-    public void drawElement(Graphics g, int x, int y, int boxWidth, int boxHeight) {
+    public void setColor(Graphics g, int x, int y, int width, int height) {
 
         g.setColor(Color.BLUE);
+        
         double P = this.getTemperature() / 1000.00;
         double R = 255.0 * P + 0 * (1.0 - P);
         double G = 0.0 * P + 0 * (1.0 - P);
@@ -82,7 +82,8 @@ public class Element implements Runnable {
         if (P >= 0 && P <= 1) {
             g.setColor(new Color((int) R, (int) G, (int) B));
         }
-        g.fillRect(x, y, boxWidth, boxHeight);
+        
+        g.fillRect(x, y, width, height);
     }
 
     public static void main(String[] args) {
