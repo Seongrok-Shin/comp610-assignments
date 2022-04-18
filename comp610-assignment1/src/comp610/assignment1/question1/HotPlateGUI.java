@@ -130,9 +130,9 @@ public class HotPlateGUI extends JPanel implements ActionListener, ChangeListene
 
     private void setDimensionalElement() {
         dimensionalElement = new Element[ROW][COL];
-        for (int row = 0; row < ROW; row++) {
-            for (int col = 0; col < COL; col++) {
-                dimensionalElement[row][col] = new Element(0, 0.05);
+        for (Element[] dimensionalElement1 : dimensionalElement) {
+            for (int col = 0; col < dimensionalElement.length; col++) {
+                dimensionalElement1[col] = new Element(0, 0.05);
             }
         }
     }
