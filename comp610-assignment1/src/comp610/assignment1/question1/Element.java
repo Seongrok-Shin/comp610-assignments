@@ -75,12 +75,12 @@ public class Element implements Runnable {
 
         g.setColor(Color.BLUE);
 
-        double P = this.getTemperature() / 1000.00;
-        double R = 255.0 * P + 0 * (1.0 - P);
-        double G = 0.0 * P + 0 * (1.0 - P);
-        double B = 0.0 * P + 255 * (1.0 - P);
-        if (P >= 0 && P <= 1) {
-            g.setColor(new Color((int) R, (int) G, (int) B));
+        double pixel = this.getTemperature() / 1000.00;
+        double red = 255.0 * pixel + 0 * (1.0 - pixel);
+        double green = 0.0 * pixel + 0 * (1.0 - pixel);
+        double blue = 0.0 * pixel + 255 * (1.0 - pixel);
+        if (pixel >= 0 && pixel <= 1) {
+            g.setColor(new Color((int) red, (int) green, (int) blue));
         }
         
         g.fillRect(x, y, width, height);
