@@ -104,7 +104,7 @@ public class HotPlateGUI extends JPanel implements ActionListener, ChangeListene
 
         public DrawPanel() {
             super.setPreferredSize(new Dimension(500, 500));
-            super.setBackground(Color.YELLOW);
+            super.setBackground(Color.RED);
         }
 
         @Override

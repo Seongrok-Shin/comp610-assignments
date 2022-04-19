@@ -74,7 +74,7 @@ public class Element implements Runnable {
     public void setColor(Graphics g, int x, int y, int width, int height) {
 
         g.setColor(Color.BLUE);
-        
+
         double P = this.getTemperature() / 1000.00;
         double R = 255.0 * P + 0 * (1.0 - P);
         double G = 0.0 * P + 0 * (1.0 - P);
