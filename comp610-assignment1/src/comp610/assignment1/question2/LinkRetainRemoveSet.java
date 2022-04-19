@@ -6,6 +6,7 @@
 package comp610.assignment1.question2;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -18,6 +19,10 @@ public class LinkRetainRemoveSet<E extends Comparable<E>> extends LinkedSet<E> {
 
     public LinkRetainRemoveSet() {
         super();
+    }
+
+    public LinkRetainRemoveSet(Collection<? extends E> c) {
+        this();
     }
 
     @Override
@@ -234,7 +239,7 @@ public class LinkRetainRemoveSet<E extends Comparable<E>> extends LinkedSet<E> {
 
         LinkRetainRemoveSet wordList = wordLists;
         wordList.putWordsToLinkSet(wordList);
-        
+
         System.out.println();
         System.out.print("set = ");
         wordList.formOfPrintSet(wordList.iterator());
