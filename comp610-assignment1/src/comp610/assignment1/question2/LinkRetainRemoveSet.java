@@ -234,13 +234,14 @@ public class LinkRetainRemoveSet<E extends Comparable<E>> extends LinkedSet<E> {
 
         LinkRetainRemoveSet wordList = wordLists;
         wordList.putWordsToLinkSet(wordList);
+        
         System.out.println();
         System.out.print("set = ");
         wordList.formOfPrintSet(wordList.iterator());
         System.out.println();
         System.out.println("remove(" + setStart + "," + setEnd + ")");
         System.out.print("set = ");
-        wordList.formOfPrintSet(wordList.retain(setStart, setEnd).iterator());
+        wordList.formOfPrintSet(wordList.remove(setStart, setEnd).iterator());
         System.out.print(" returned set = ");
         wordList.formOfPrintSet(wordList.iterator());
         System.out.println();
